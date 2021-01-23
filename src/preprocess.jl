@@ -1,4 +1,4 @@
-function rescale!(df, dict)
+function rescale!(df::DataFrame, dict::Dict) ::DataFrame
 		
   df[!,[:ti, :tin0, :tz, :tlat, :tv]] .*= dict[:t]
   df[!,[:v]] .*= dict[:v]
@@ -7,7 +7,7 @@ function rescale!(df, dict)
   return df
 end
 
-function blSubtract!(df, var::Symbol, window)
+function blSubtract!(df::DataFrame, var::Symbol, window)::DataFrame
 
   subset =filter(x -> x.ti>=(window[1]) && x.ti<(window[2]), df)
   insertcols!(df, Symbol(var,'_',"blsub") => df[!,var].-mean(subset[!,var]))
@@ -16,7 +16,7 @@ function blSubtract!(df, var::Symbol, window)
 
 end
 
-function v2nm(V, calibration)
+function v2nm(V, calibration::Float64)
   
   gain = 20
   dist = gain * calibration * V
@@ -24,22 +24,22 @@ function v2nm(V, calibration)
   return dist
 end
 
-function positionCorrection!(df, sensitivity, calibration=15.21)
+function positionCorrection!(df::DataFrame, sensitivity::Float64, calibration=15.21::Float64) ::DataFrame
   
   positionRaw = v2nm(df[!,:z], calibration)
   insertcols!(df, :deflection => df[!,:in0_blsub] .* sensitivity)
-  insertcols!(df, :position => positionRaw .- df[!,:deflection] .- 								minimum(positionRaw))
+  insertcols!(df, :position => positionRaw .- df[!,:deflection] .- minimum(positionRaw))
   
   return df
 end
 
-function calculateForce!(df, kcant)
+function calculateForce!(df::DataFrame, kcant::Float64) ::DataFrame
   
   insertcols!(df, :force => df[!,:deflection] .* kcant)
   
 end
 
-function calculateWork!(df)
+function calculateWork!(df::DataFrame) ::DataFrame
   
   insertcols!(df, :work => cumul_integrate(df[!, :position], df[!, :force]))
   
@@ -60,7 +60,7 @@ function preprocessFile(df, dict, sensitivity, kcant, window)
 
 end
 
-function preprocessFolder(path, suffixIdentifier, window)
+function preprocessFolder(path::String, suffixIdentifier::String, window)
 	rescaleDict = Dict(:t => 1000, :i => 1e12, :v => 1e3);
 		
 	fileList = makeFileList(path, suffixIdentifier)	

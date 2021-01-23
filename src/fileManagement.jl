@@ -1,4 +1,4 @@
-function makeFileList(path, suffixIdentifier)
+function makeFileList(path::String, suffixIdentifier::String)
 
   fileList = Vector{String}()
   for (root, dirs, files) in walkdir(path)
