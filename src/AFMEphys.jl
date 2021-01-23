@@ -1,7 +1,8 @@
 module AFMEphys
 
 include("fileManagement.jl")
+include("preprocess.jl")
 
-export makeFileList
+export makeFileList, preprocessFile, preprocessFolder
 
 end
