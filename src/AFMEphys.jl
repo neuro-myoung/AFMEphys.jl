@@ -1,5 +1,7 @@
 module AFMEphys
 
-# Write your package code here.
+include("fileManagement.jl")
+
+export makeFileList
 
 end
