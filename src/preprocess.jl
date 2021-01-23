@@ -41,7 +41,7 @@ end
 
 function calculateWork!(df::DataFrame) ::DataFrame
   
-  insertcols!(df, :work => cumul_integrate(df[!, :position], df[!, :force]))
+  insertcols!(df, :work => cumul_integrate(df[!, :position], df[!, :force])/1e3) #in units of fJ
   
   return df
 end
