@@ -40,11 +40,11 @@ end
 
 function summarizeData(fileList)
   
-  colnames = [:path, :uniqueID, :date, :construct, :cell, :protocol, :velocity, :kcant, :dkcant, :osm, :Rs, :Rscomp, :Cm, :seal, :vhold, 				          :vstep, :peaki, :tpeaki, :peakf, :tpeakf, :peakw, :tpeakw, :wpeakf, :leak, :offset, :stdev, :thresh, :threshind, :fthresh, 
+  colnames = [:path, :uniqueID, :date, :construct, :cell, :protocol, :velocity, :kcant, :dkcant, :osm, :Rs, :Rscomp, :Cm, :seal, :vhold, 				          :vstep, :peaki, :tpeaki, :peakf, :tpeakf, :peakw, :tpeakw, :wpeakf, :leak, :offset, :stdev, :delay, :thresh, :threshind, :fthresh, 
               :wthresh, :rev, :ss, :ssdensity]
 
   coltypes = [String, String, String, String, String, String, Float64, Float64, Float64, Int64, Float64, Int64, Float64, Float64, 
-              Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, 
+              Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, 
               Int64, Float64, Float64, Float64, Float64, Float64]
 
   summaryDf = DataFrame(coltypes, colnames)
@@ -90,7 +90,7 @@ function summarizeData(fileList)
     ssdensity = ss/Cm
     
     push!(summaryDf, (path, uniqueID, date, construct, cell, protocol, velocity, kcant, dkcant, osm, Rs, Rscomp, Cm, seal, vhold, 
-          vstep, peaki, tpeaki, peakf, tpeakf, peakw, tpeakw, wpeakf, leak, offset, stdev, thresh, threshind, fthresh, wthresh, 
+          vstep, peaki, tpeaki, peakf, tpeakf, peakw, tpeakw, wpeakf, leak, offset, stdev, delay, thresh, threshind, fthresh, wthresh, 
           rev, ss, ssdensity))			
   end
 
